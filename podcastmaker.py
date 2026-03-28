@@ -103,24 +103,9 @@ def create_stock_analyst_agent(name: str, role: str) -> ReActAgent:
     """Create a stock analyst agent with specific role."""
     logger.info("Creating stock analyst agent: %s (%s)", name, role)
     
-    if role == "proposer":
-        sys_prompt = (
-            f"You are {name}, an experienced stock analyst who specializes in identifying "
-            "undervalued, low-key US stocks with high growth potential within 6 months. "
-            "Your role is to propose promising stocks and explain why they could be winners. "
-            "Focus on: emerging companies, recent positive developments, market trends, "
-            "technical analysis, and growth catalysts. Be specific about timeframes and "
-            "expected returns. Suggest 1-2 stocks per discussion round with detailed reasoning."
-        )
-    else:  # validator
-        sys_prompt = (
-            f"You are {name}, a critical stock analyst who validates investment ideas. "
-            "Your role is to fact-check, analyze risks, and provide counter-arguments "
-            "or supporting evidence for proposed stocks. Research fundamentals, "
-            "market conditions, competition, financial health, and potential risks. "
-            "Either validate the proposal with additional facts or challenge it with "
-            "solid reasoning. Be thorough and analytical."
-        )
+    prompt_file = f"prompts/{role}.txt"
+    with open(prompt_file, "r") as f:
+        sys_prompt = f.read().strip().format(name=name)
     
     return ReActAgent(
         name=name,
