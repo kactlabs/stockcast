@@ -391,6 +391,9 @@ class StockDiscussionTracker:
       {recommendations_html}
     </ul>
         <p>{final_reasoning}</p>
+    <hr/>
+    <p><strong>Provider:</strong> {os.getenv('LLM_PROVIDER', 'llama.cpp')}<br/>
+    <strong>Model:</strong> {_resolve_model_name()}</p>
   </body>
 </html>
 """.strip()
@@ -446,6 +449,11 @@ class StockDiscussionTracker:
                 "",
                 self.final_reasoning,
                 "",
+                "---",
+                "",
+                f"**Provider:** {os.getenv('LLM_PROVIDER', 'llama.cpp')}  ",
+                f"**Model:** {_resolve_model_name()}",
+                "",
             ]
         )
 
@@ -454,7 +462,8 @@ class StockDiscussionTracker:
     def _update_index(self, filename: str) -> None:
         """Append a link to the generated report in index.md."""
         index_path = "index.md"
-        title = f"Report {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        title = ", ".join(self.final_recommendations) if self.final_recommendations else "Stock Analysis"
+        title = f"{title} — {self.start_time.strftime('%Y-%m-%d')}"
         entry = f"  * [{title}]({filename})\n"
         try:
             if os.path.exists(index_path):
