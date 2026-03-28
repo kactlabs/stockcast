@@ -37,11 +37,15 @@ from llm import (
 
 load_dotenv()
 
-# Sample low-key stocks for discussion (agents can suggest others)
-SAMPLE_STOCKS = [
-    "PLTR", "SOFI", "RBLX", "CRWD", "SNOW", "DDOG", "NET", "OKTA", 
-    "ZM", "DOCU", "TWLO", "SHOP", "SQ", "ROKU", "PINS", "SNAP"
-]
+# Load stock symbols from external file (one symbol per line)
+def _load_stock_symbols(path: str = "stocks.txt") -> List[str]:
+    try:
+        with open(path, "r") as f:
+            return [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Stock symbols file not found: {path}")
+
+SAMPLE_STOCKS = _load_stock_symbols()
 
 
 def fetch_stock_research(symbols: List[str]) -> str:
