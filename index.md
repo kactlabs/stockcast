@@ -9,3 +9,5 @@ Stock Market Podcast by Agents
   * [I, RBLX — 2026 Mar 27](stock_analysis_report_20260327_003.md)
   * [US, CRWD — 2026 Mar 27](stock_analysis_report_20260327_004.md)
   * [US, CRWD — 2026 Mar 27](stock_analysis_report_20260327_005.md)
+  * [US, CRWD — 2026 Mar 27](stock_analysis_report_20260327_006.md)
+  * [I, CRWD — 2026 Mar 27](stock_analysis_report_20260327_007.md)
