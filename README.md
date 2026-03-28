@@ -76,6 +76,7 @@ If MarkIt is available the HTML discussion is converted to clean markdown; other
 
 ```
 ├── stock_symbol_analysis.py        # Main multi-agent discussion script
+├── podcastmaker.py                 # Podcast-style variant of the stock analysis discussion
 ├── stock_symbol_analysis_vscode.py # Alternate VS Code variant (cricket commentary demo)
 ├── llm.py                          # LLM adapter layer (Ollama, OpenAI, llama.cpp, Gemini)
 ├── requirements.txt
