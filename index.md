@@ -9,3 +9,4 @@ Stock Market Podcast by Agents
   * [CRWD, NET — 2026 Mar 27](stock_analysis_report_20260327_003.md)
   * [CRWD, NET — 2026 Mar 27](stock_analysis_report_20260327_004.md)
   * [RBLX, SOFI — 2026 Mar 27](stock_analysis_report_20260327_005.md)
+  * [CRWD, RBLX — 2026 Mar 27](stock_analysis_report_20260327_006.md)
