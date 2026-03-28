@@ -399,6 +399,8 @@ class StockDiscussionTracker:
         """Fallback markdown when MarkIt is not available."""
         generated_at = self.start_time.strftime("%Y-%m-%d %H:%M:%S")
         lines: List[str] = [
+            "[Home](index.md)",
+            "",
             "# Stock Analysis Discussion Report",
             "",
             f"**Generated on:** {generated_at}",
@@ -449,6 +451,25 @@ class StockDiscussionTracker:
 
         return "\n".join(lines)
 
+    def _update_index(self, filename: str) -> None:
+        """Append a link to the generated report in index.md."""
+        index_path = "index.md"
+        title = f"Report {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        entry = f"  * [{title}]({filename})\n"
+        try:
+            if os.path.exists(index_path):
+                with open(index_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                if filename not in content:
+                    with open(index_path, "a", encoding="utf-8") as f:
+                        f.write(entry)
+            else:
+                with open(index_path, "w", encoding="utf-8") as f:
+                    f.write(f"# StockCast\n\nStock Market Podcast by Agents\n\n## Category :\n\n{entry}")
+            logger.info("Updated index.md with: %s", filename)
+        except Exception as exc:
+            logger.warning("Could not update index.md: %s", exc)
+
     def export_report(self, output_filename: str) -> str:
         """Export report as markdown using MarkIt; fallback to native markdown."""
         html_report = self._build_html_report()
@@ -478,6 +499,7 @@ class StockDiscussionTracker:
                 )
 
                 if completed.returncode == 0:
+                    self._update_index(output_filename)
                     return "markit"
 
                 logger.warning(
@@ -494,6 +516,7 @@ class StockDiscussionTracker:
         markdown_content = self._build_markdown_fallback()
         with open(output_filename, "w", encoding="utf-8") as file_handle:
             file_handle.write(markdown_content)
+        self._update_index(output_filename)
         return "fallback"
 
 
