@@ -463,7 +463,7 @@ class StockDiscussionTracker:
         """Append a link to the generated report in index.md."""
         index_path = "index.md"
         title = ", ".join(self.final_recommendations) if self.final_recommendations else "Stock Analysis"
-        title = f"{title} — {self.start_time.strftime('%Y-%m-%d')}"
+        title = f"{title} — {self.start_time.strftime('%Y %b %d')}"
         entry = f"  * [{title}]({filename})\n"
         try:
             if os.path.exists(index_path):
