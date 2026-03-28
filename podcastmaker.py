@@ -485,6 +485,14 @@ class StockDiscussionTracker:
         except Exception as exc:
             logger.warning("Could not update index.md: %s", exc)
 
+    def _prepend_home_link(self, filename: str) -> None:
+        """Ensure [Home](index.md) is at the top of the file."""
+        with open(filename, "r", encoding="utf-8") as f:
+            content = f.read()
+        if not content.startswith("[Home](index.md)"):
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write("[Home](index.md)\n\n" + content)
+
     def export_report(self, output_filename: str) -> str:
         """Export report as markdown using MarkIt; fallback to native markdown."""
         html_report = self._build_html_report()
@@ -514,6 +522,7 @@ class StockDiscussionTracker:
                 )
 
                 if completed.returncode == 0:
+                    self._prepend_home_link(output_filename)
                     self._update_index(output_filename)
                     return "markit"
 

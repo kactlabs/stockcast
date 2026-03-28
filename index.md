@@ -4,6 +4,4 @@ Stock Market Podcast by Agents
 
 ## Category : 
 
-  * [DDOG, OKTA — 2026 Mar 27](stock_analysis_report_20260327_001.md)
-  * [RBLX, CRWD — 2026 Mar 27](stock_analysis_report_20260327_002.md)
-  * [CRWD, NET — 2026 Mar 27](stock_analysis_report_20260327_003.md)
+  * [US, CRWD — 2026 Mar 27](stock_analysis_report_20260327_001.md)
