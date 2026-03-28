@@ -286,9 +286,15 @@ def normalize_text_for_report(text: str) -> str:
     # Promote common inline section labels to sub-headings for readability.
     cleaned = re.sub(r"\*\*(Analysis|Key Catalyst|Fundamentals|Technical Analysis|Opportunities|Risks|Risk Profile|Expected Return|Growth Catalysts|Market Position|Recent Positive Developments|Reasoning):\*\*\s*", r"\n\n#### \1\n", cleaned, flags=re.IGNORECASE)
 
-    # Keep bullets separated and readable.
+    # Ensure bold blocks (**...**) that start a line get a blank line before them.
+    cleaned = re.sub(r"(?<!\n)\n(\*\*)", r"\n\n\1", cleaned)
+
+    # Convert asterisk bullets (* item) to dash bullets (- item) with proper line breaks.
+    cleaned = re.sub(r"(?:^|\n)\s*\*\s+(?!\*)", r"\n- ", cleaned)
+
+    # Keep dash bullets separated and readable.
     cleaned = re.sub(r"\s-\s\*\*", r"\n- **", cleaned)
-    cleaned = re.sub(r"\s-\s", r"\n- ", cleaned)
+    cleaned = re.sub(r"(?<!\n)\s-\s(?!\*\*)", r"\n- ", cleaned)
 
     # Standardize stock heading style where models output numbered lists.
     cleaned = re.sub(r"^###\s*(\d+)\.\s*", r"#### Stock \1\n", cleaned, flags=re.MULTILINE)
