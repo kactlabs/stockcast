@@ -457,8 +457,7 @@ class StockDiscussionTracker:
                 "",
                 "---",
                 "",
-                f"**Provider:** {os.getenv('LLM_PROVIDER', 'llama.cpp')}  ",
-                f"**Model:** {_resolve_model_name()}",
+                f"**Provider:** {os.getenv('LLM_PROVIDER', 'llama.cpp')} | **Model:** {_resolve_model_name()}",
                 "",
             ]
         )
