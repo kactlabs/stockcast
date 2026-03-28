@@ -529,7 +529,7 @@ class StockDiscussionTracker:
         return "fallback"
 
 
-def _parse_moderator_response(response: Msg) -> dict:
+def _parse_moderator_response(response: Msg, round_num: int = 0) -> dict:
     """Extract structured data from moderator response, with text fallback.
 
     Returns dict with keys: discussion_complete, recommended_stocks, reasoning.
@@ -644,7 +644,7 @@ async def run_stock_analysis_discussion() -> None:
             structured_model=StockRecommendation
         )
         
-        parsed = _parse_moderator_response(moderator_response)
+        parsed = _parse_moderator_response(moderator_response, round_num)
         
         if parsed["discussion_complete"]:
             recommendations = parsed["recommended_stocks"]
@@ -682,7 +682,7 @@ async def run_stock_analysis_discussion() -> None:
             ),
             structured_model=StockRecommendation
         )
-        parsed = _parse_moderator_response(final_response)
+        parsed = _parse_moderator_response(final_response, round_num)
         recommendations = parsed["recommended_stocks"]
         reasoning = parsed["reasoning"]
         tracker.set_final_decision(recommendations, reasoning, round_num)
