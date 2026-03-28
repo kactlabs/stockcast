@@ -16,3 +16,4 @@ Stock Market Podcast by Agents
   * [US, SOFI — 2026 Mar 27](stock_analysis_report_20260327_010.md)
   * [I, CRWD — 2026 Mar 27](stock_analysis_report_20260327_011.md)
   * [OKTA, SNOW — 2026 Mar 27](stock_analysis_report_20260327_012.md)
+  * [I, CRWD — 2026 Mar 27](stock_analysis_report_20260327_013.md)
