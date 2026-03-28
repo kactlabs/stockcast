@@ -10,6 +10,7 @@ March 25, 2026
 
 import asyncio
 import html
+import json
 import logging
 import os
 import re
@@ -254,12 +255,39 @@ def extract_text_content(content: object) -> str:
         return ""
 
     if isinstance(content, str):
+        # Try to parse JSON strings from structured model output
+        stripped = content.strip()
+        if stripped.startswith("{") or stripped.startswith("["):
+            try:
+                parsed = json.loads(stripped)
+                return extract_text_content(parsed)
+            except (json.JSONDecodeError, ValueError):
+                pass
         return normalize_text_for_report(content)
 
     if isinstance(content, dict):
         if isinstance(content.get("text"), str):
             return normalize_text_for_report(content["text"])
-        return str(content)
+        # Handle structured stock recommendation output
+        if "recommended_stocks" in content:
+            parts = []
+            for stock in content["recommended_stocks"]:
+                if isinstance(stock, dict):
+                    symbol = stock.get("symbol", "")
+                    company = stock.get("company", "")
+                    reasoning = stock.get("reasoning", "")
+                    potential = stock.get("growth_potential", "")
+                    parts.append(
+                        f"**{symbol} ({company})**\n\n"
+                        f"Growth Potential: {potential}\n\n"
+                        f"{reasoning}"
+                    )
+                else:
+                    parts.append(str(stock))
+            return normalize_text_for_report("\n\n".join(parts))
+        if "reasoning" in content:
+            return normalize_text_for_report(content["reasoning"])
+        return normalize_text_for_report(str(content))
 
     if isinstance(content, list):
         parts: List[str] = []
